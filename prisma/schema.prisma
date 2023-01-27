@@ -14,12 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -55,6 +49,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    votes         Vote[]
+    polls         Poll[]
 }
 
 model VerificationToken {
@@ -63,4 +59,32 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Vote {
+    id       String  @id @default(cuid())
+    user     User    @relation(fields: [userId], references: [id])
+    userId   String
+    option   Option  @relation(fields: [optionId], references: [id])
+    optionId String
+    Poll     Poll?   @relation(fields: [pollId], references: [id])
+    pollId   String?
+}
+
+model Option {
+    id     String @id @default(cuid())
+    title  String
+    poll   Poll   @relation(fields: [pollId], references: [id])
+    pollId String
+    votes  Vote[]
+}
+
+model Poll {
+    id          String   @id @default(cuid())
+    title       String
+    description String?
+    creator     User     @relation(fields: [creatorId], references: [id])
+    creatorId   String
+    options     Option[]
+    votes       Vote[]
 }
