@@ -1,7 +1,29 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import { useEffect } from "react";
+
+import { Poll } from "@prisma/client";
+import { useState } from "react";
+
+import { api } from "../utils/api";
+
+// TODO: REACT QUERY TO GET POLLS!
 
 const Home: NextPage = () => {
+  const getPolls = api.poll.getAll.useQuery();
+  const [polls, setPolls] = useState<Poll[]>([]);
+
+  useEffect(() => {
+    if (getPolls.data) {
+      setPolls(getPolls.data);
+    }
+  }, [getPolls.data]);
+
+  if (getPolls.isLoading) {
+    return <div>Loading...</div>;
+  } else if (getPolls.isError) {
+    return <div>Error: {getPolls.error.message}</div>;
+  }
   return (
     <>
       <Head>
@@ -19,12 +41,22 @@ const Home: NextPage = () => {
         <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800">
           Create a New Poll
         </button>
-        <div className="w-full rounded-lg border border-neutral-300 bg-white p-6">
-          <h1 className="text-xl font-bold text-neutral-900">Test Poll</h1>
-          <p className="mt-4 text-neutral-700">This is a test poll.</p>
-        </div>
+        <section className="w-full">
+          {polls.map((poll) => (
+            <Poll key={poll.id} poll={poll} />
+          ))}
+        </section>
       </main>
     </>
+  );
+};
+
+const Poll = ({ poll }: { poll: Poll }) => {
+  return (
+    <div className="w-full rounded-lg border border-neutral-300 bg-white p-6">
+      <h1 className="text-xl font-bold text-neutral-900">{poll.title}</h1>
+      <p className="mt-4 text-neutral-700">{poll.description}</p>
+    </div>
   );
 };
 
