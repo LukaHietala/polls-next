@@ -45,7 +45,12 @@ export default function CreatePoll() {
     void router.push("/");
   }
   if (isError) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div className="font-mono">
+        <h1>Error: {error.message}</h1>
+        <Link href={"/"}>Go back</Link>
+      </div>
+    );
   }
   console.log(formik.values);
   return (

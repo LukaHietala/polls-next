@@ -40,8 +40,8 @@ export const pollRouter = createTRPCRouter({
           creatorId: ctx.session.user.id,
         },
       });
-      if (usersPolls >= 3) {
-        throw new Error("You can only create 3 polls");
+      if (usersPolls >= 5) {
+        throw new Error("You can only create 5 polls :(");
       }
       const poll = await ctx.prisma.poll.create({
         data: {
