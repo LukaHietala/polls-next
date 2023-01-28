@@ -1,28 +1,20 @@
-import type { Option } from "@prisma/client";
 import { useFormik } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
 import { api } from "../utils/api";
 
 export default function CreatePoll() {
+  const { mutate } = api.poll.create.useMutation();
   const formik = useFormik({
     initialValues: {
       title: "",
       description: "",
       options: [
-        {
-          title: "",
-        },
-        {
-          title: "",
-        },
-        {
-          title: "",
-        },
-        {
-          title: "",
-        },
-      ] as Option[],
+        { title: "test" },
+        { title: "test1" },
+        { title: "test2" },
+        { title: "test3" },
+      ],
     },
     validationSchema: yup.object({
       title: yup.string().required("Title is required").min(5).max(50),
@@ -38,7 +30,11 @@ export default function CreatePoll() {
       ),
     }),
     onSubmit(values) {
-      console.log(values);
+      mutate({
+        title: values.title,
+        description: values.description,
+        options: values.options.map((option) => option.title),
+      });
     },
   });
   console.log(formik.values);
@@ -82,7 +78,7 @@ export default function CreatePoll() {
                 id="title"
                 value={formik.values.title}
                 onChange={formik.handleChange}
-                className="block w-full rounded-md border border-gray-300 bg-white p-2 text-sm"
+                className="block w-full rounded-md border border-gray-300 bg-white p-2 text-sm focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
               />
             </div>
             <label
@@ -99,16 +95,11 @@ export default function CreatePoll() {
                 id="description"
                 value={formik.values.description}
                 onChange={formik.handleChange}
-                className="block w-full rounded-md border border-gray-300 bg-white p-2 text-sm"
+                className="block w-full rounded-md border border-gray-300 bg-white p-2 text-sm focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
                 cols={30}
               />
             </div>
-            <div className="mt-8 flex flex-row gap-2">
-              <button className="rounded-md bg-gray-900 py-2 px-3 text-sm font-medium text-white">
-                Add option
-              </button>
-              <button className="py-2 px-3 text-sm">Remove all options</button>
-            </div>
+
             <div className="mt-6">
               <label className="block text-sm font-medium text-neutral-700">
                 Options
@@ -118,42 +109,49 @@ export default function CreatePoll() {
                   type="text"
                   name="option"
                   id="option"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
                 />
               </div>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="option"
-                  id="option"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2"
+                  name="option1"
+                  id="option1"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
                 />
               </div>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="option"
-                  id="option"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2"
+                  name="option2"
+                  id="option2"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
                 />
               </div>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="option"
-                  id="option"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2"
+                  name="option3"
+                  id="option3"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
                 />
               </div>
             </div>
-            <div className="mt-8 flex flex-row justify-end gap-2">
-              <button className="py-2 px-3 text-sm">Cancel</button>
-              <button
-                className="rounded-md bg-gray-900 py-2 px-3 text-sm font-medium text-white"
-                type="submit"
-              >
-                Create Poll
+            <div className="mt-8 flex flex-row justify-between gap-4">
+              <button className="py-2 px-3 text-sm hover:opacity-75">
+                Add option
               </button>
+              <div>
+                <Link className="py-2 px-3 text-sm hover:opacity-75" href={"/"}>
+                  Cancel
+                </Link>
+                <button
+                  className="rounded-md bg-gray-900 py-2 px-3 text-sm font-medium text-white hover:bg-gray-800"
+                  type="submit"
+                >
+                  Create Poll
+                </button>
+              </div>
             </div>
           </form>
         </div>

@@ -40,7 +40,7 @@ const Home: NextPage = () => {
           </p>
         </div>
         <Link href="/create" className="w-full">
-          <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800">
+          <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-neutral-400 hover:bg-neutral-100">
             Create a New Poll
           </button>
         </Link>
