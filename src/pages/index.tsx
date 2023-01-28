@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Poll } from "@prisma/client";
 import { useState } from "react";
 
+import Link from "next/link";
 import { api } from "../utils/api";
 
 // TODO: REACT QUERY TO GET POLLS!
@@ -38,9 +39,11 @@ const Home: NextPage = () => {
             This is a polling app. You can create polls and vote on them.
           </p>
         </div>
-        <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800">
-          Create a New Poll
-        </button>
+        <Link href="/create" className="w-full">
+          <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800">
+            Create a New Poll
+          </button>
+        </Link>
         <section className="w-full">
           {polls.map((poll) => (
             <Poll key={poll.id} poll={poll} />
