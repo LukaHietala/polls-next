@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as yup from "yup";
 import { api } from "../utils/api";
 
 export default function CreatePoll() {
-  const { mutate, isSuccess } = api.poll.create.useMutation();
+  const { mutate, isSuccess, isError, error } = api.poll.create.useMutation();
   const router = useRouter();
+  const { data } = useSession();
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -41,6 +43,9 @@ export default function CreatePoll() {
   });
   if (isSuccess) {
     void router.push("/");
+  }
+  if (isError) {
+    return <div>Error: {error.message}</div>;
   }
   console.log(formik.values);
   return (

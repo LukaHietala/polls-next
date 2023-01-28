@@ -35,6 +35,14 @@ export const pollRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const usersPolls = await ctx.prisma.poll.count({
+        where: {
+          creatorId: ctx.session.user.id,
+        },
+      });
+      if (usersPolls >= 3) {
+        throw new Error("You can only create 3 polls");
+      }
       const poll = await ctx.prisma.poll.create({
         data: {
           title: input.title,
