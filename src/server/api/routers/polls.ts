@@ -24,6 +24,11 @@ export const pollRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
+        include: {
+          options: true,
+          creator: true,
+          votes: true,
+        },
       });
     }),
   create: protectedProcedure

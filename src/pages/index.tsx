@@ -40,7 +40,7 @@ const Home: NextPage = () => {
           </p>
         </div>
         <Link href="/create" className="w-full">
-          <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-neutral-400 hover:bg-neutral-100">
+          <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-sky-400 hover:bg-sky-100">
             Create a New Poll
           </button>
         </Link>
@@ -56,10 +56,13 @@ const Home: NextPage = () => {
 
 const Poll = ({ poll }: { poll: Poll }) => {
   return (
-    <div className="w-full rounded-lg border border-neutral-300 bg-white p-6">
+    <Link
+      href={`polls/${poll.id}`}
+      className="w-full rounded-lg border border-neutral-300 bg-white p-6 transition-all duration-150 ease-in-out hover:border-neutral-400 hover:bg-neutral-100"
+    >
       <h1 className="text-xl font-bold text-neutral-900">{poll.title}</h1>
       <p className="mt-4 text-neutral-700">{poll.description}</p>
-    </div>
+    </Link>
   );
 };
 
