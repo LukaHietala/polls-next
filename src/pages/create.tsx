@@ -1,10 +1,12 @@
 import { useFormik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import * as yup from "yup";
 import { api } from "../utils/api";
 
 export default function CreatePoll() {
-  const { mutate } = api.poll.create.useMutation();
+  const { mutate, isSuccess } = api.poll.create.useMutation();
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -37,6 +39,9 @@ export default function CreatePoll() {
       });
     },
   });
+  if (isSuccess) {
+    void router.push("/");
+  }
   console.log(formik.values);
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-xl flex-col items-center justify-center gap-4">

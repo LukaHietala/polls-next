@@ -44,7 +44,7 @@ const Home: NextPage = () => {
             Create a New Poll
           </button>
         </Link>
-        <section className="w-full">
+        <section className="flex w-full flex-col gap-2">
           {polls.map((poll) => (
             <Poll key={poll.id} poll={poll} />
           ))}
