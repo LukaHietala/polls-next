@@ -27,7 +27,7 @@ export default function CreatePoll() {
         .max(255),
       options: yup.array().of(
         yup.object({
-          title: yup.string().required("Option is required"),
+          title: yup.string().required("Option is required").min(1).max(85),
         })
       ),
     }),
@@ -115,39 +115,22 @@ export default function CreatePoll() {
 
             <div className="mt-6">
               <label className="block text-sm font-medium text-neutral-700">
-                Options
+                {formik.errors.options
+                  ? formik.errors.options[0].title
+                  : "Options (min 2)"}
               </label>
               <div className="mt-2">
-                <input
-                  type="text"
-                  name="option"
-                  id="option"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
-                />
-              </div>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="option1"
-                  id="option1"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
-                />
-              </div>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="option2"
-                  id="option2"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
-                />
-              </div>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="option3"
-                  id="option3"
-                  className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
-                />
+                {formik.values.options.map((option, index) => (
+                  <div className="mt-2" key={index}>
+                    <input
+                      type="text"
+                      name={`options[${index}].title`}
+                      value={option.title}
+                      onChange={formik.handleChange}
+                      className="block w-full rounded-md border border-gray-300 bg-white py-1 px-2 focus:border-2 focus:border-neutral-900 focus:outline-none focus:ring-0"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
             <div className="mt-8 flex flex-row justify-between gap-4">

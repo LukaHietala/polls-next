@@ -3,15 +3,27 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const pollRouter = createTRPCRouter({
-    getAll: publicProcedure.query(async ({ ctx }) => {
-        return await ctx.prisma.poll.findMany({
-            include: {
-                options: true,
-                creator: true,
-                votes: true,
-            },
-        });
-    }),
+    getAll: publicProcedure
+        .input(
+            z.object({
+                authorId: z.string().optional().nullish(),
+            })
+        )
+        .query(async ({ ctx, input }) => {
+            if (!input.authorId) {
+                return null;
+            }
+            return await ctx.prisma.poll.findMany({
+                where: {
+                    creatorId: input.authorId,
+                },
+                include: {
+                    options: true,
+                    creator: true,
+                    votes: true,
+                },
+            });
+        }),
 
     getOne: publicProcedure
         .input(

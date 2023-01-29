@@ -16,7 +16,11 @@ export default function PollPage() {
         mutate,
         isError: isVoteError,
         error: voteError,
-    } = api.poll.vote.useMutation();
+    } = api.poll.vote.useMutation({
+        onSuccess: () => {
+            router.reload();
+        },
+    });
     if (isLoading) {
         return <div>Loading...</div>;
     } else if (isError) {
