@@ -19,7 +19,7 @@ export default function CreatePoll() {
       ],
     },
     validationSchema: yup.object({
-      title: yup.string().required("Title is required").min(5).max(50),
+      title: yup.string().required("Title is required").min(5).max(85),
       description: yup
         .string()
         .required("Description is required")
