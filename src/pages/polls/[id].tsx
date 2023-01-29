@@ -15,6 +15,8 @@ export default function PollPage() {
     return <div>Loading...</div>;
   } else if (isError) {
     return <div>Error: {error.message}</div>;
+  } else if (!data) {
+    return <div>Not found (Wrong id)</div>;
   }
   return (
     <>

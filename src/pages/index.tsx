@@ -34,14 +34,19 @@ const Home: NextPage = () => {
       </Head>
       <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col items-center justify-center gap-4">
         <div className="flex w-full flex-col">
-          <h1 className="text-center text-4xl font-bold">Polling app</h1>
+          <h1 className="mt-12 text-center text-4xl font-bold">Polling app</h1>
           <p className="mt-4 text-center text-neutral-700">
             This is a polling app. You can create polls and vote on them.
           </p>
         </div>
         <Link href="/create" className="w-full">
-          <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-sky-400 hover:bg-sky-100">
+          <button className="mt-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-emerald-400 hover:bg-emerald-100">
             Create a New Poll
+          </button>
+        </Link>
+        <Link href="/vote" className="w-full">
+          <button className="mb-6 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-emerald-400 hover:bg-emerald-100">
+            Vote on a Poll
           </button>
         </Link>
         <section className="flex w-full flex-col gap-2">
