@@ -1,6 +1,7 @@
 import { Option } from "@prisma/client";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { api } from "../../utils/api";
 
@@ -24,12 +25,14 @@ export default function PollPage() {
       </Head>
       <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col items-center justify-center gap-4 text-neutral-900">
         <div className="flex w-full flex-col rounded-lg border border-neutral-300 bg-neutral-100 p-8">
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row justify-between gap-4">
             <div className="flex w-full flex-col">
-              <h1 className="text-3xl font-bold text-neutral-800">
+              <h1 className="text-2xl font-bold text-neutral-800">
                 {data?.title}
               </h1>
-              <p className="mt-1 text-neutral-700">{data?.description}</p>
+              <p className="mt-2 text-sm font-medium text-neutral-600">
+                {data?.description}
+              </p>
             </div>
             <div className="group relative flex cursor-pointer flex-col items-center text-xs">
               <Image
@@ -47,14 +50,14 @@ export default function PollPage() {
               </div>
             </div>
           </div>
-          <div className="mt-6 flex flex-row items-center justify-between">
+          <div className="mt-8 flex flex-row items-center justify-between">
             <div className="flex flex-col">
               <h2 className="font-semibold text-neutral-800">Votes</h2>
               <p className="text-xs font-medium text-neutral-600">
                 You can vote for one of the following options
               </p>
             </div>
-            <div className="rounded-md border-2 border-teal-400 bg-teal-200 p-2 text-sm font-medium text-neutral-700">
+            <div className="rounded-md border-2 border-emerald-300 bg-emerald-100 p-2 text-sm font-medium text-neutral-700">
               {data?.votes.length} votes
             </div>
           </div>
@@ -63,6 +66,12 @@ export default function PollPage() {
               <Option key={option.id} option={option} />
             ))}
           </section>
+          <Link
+            className="mt-6 text-sm font-medium text-neutral-600"
+            href={"/"}
+          >
+            Go back
+          </Link>
         </div>
       </main>
     </>
@@ -71,8 +80,9 @@ export default function PollPage() {
 
 const Option = ({ option }: { option: Option }) => {
   return (
-    <div className="w-full rounded-lg border border-neutral-300 bg-white py-2 px-3 transition-all duration-150 ease-in-out hover:border-neutral-400 hover:bg-neutral-100">
+    <div className="flex w-full cursor-pointer flex-row items-center justify-between rounded-lg border border-neutral-300 bg-white py-2 px-3 transition-all duration-150 ease-in-out hover:border-neutral-400 hover:bg-neutral-100">
       <h2 className="font-medium text-neutral-700">{option.title}</h2>
+      <span className="text-sm text-neutral-600">3 votes</span>
     </div>
   );
 };
