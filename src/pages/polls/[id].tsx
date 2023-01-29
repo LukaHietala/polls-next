@@ -32,7 +32,7 @@ export default function PollPage() {
               <h1 className="text-2xl font-bold text-neutral-800">
                 {data?.title}
               </h1>
-              <p className="mt-2 text-sm font-medium text-neutral-600">
+              <p className="mt-3 text-sm font-medium text-neutral-600">
                 {data?.description}
               </p>
             </div>
@@ -59,21 +59,31 @@ export default function PollPage() {
                 You can vote for one of the following options
               </p>
             </div>
-            <div className="rounded-md border-2 border-emerald-300 bg-emerald-100 p-2 text-sm font-medium text-neutral-700">
+            <div className="rounded-md border border-emerald-300 bg-emerald-100 p-2 text-sm font-medium text-neutral-700">
               {data?.votes.length} votes
             </div>
           </div>
-          <section className="mt-4 flex w-full flex-col gap-2">
+          <section className="mt-4 flex w-full select-none flex-col gap-2">
             {data?.options.map((option) => (
               <Option key={option.id} option={option} />
             ))}
           </section>
-          <Link
-            className="mt-6 text-sm font-medium text-neutral-600"
-            href={"/"}
-          >
-            Go back
-          </Link>
+          <section className="mt-10 flex flex-row items-baseline justify-between">
+            <Link className="text-sm font-medium text-neutral-600" href={"/"}>
+              Go back
+            </Link>
+            <span className="inline-flex items-center gap-1 text-sm text-neutral-600">
+              ID:{" "}
+              <code
+                className="cursor-pointer select-none rounded-md bg-neutral-200 p-1 text-xs text-neutral-700 hover:bg-neutral-300/80"
+                onClick={() => {
+                  void navigator.clipboard.writeText(data.id);
+                }}
+              >
+                {data.id}
+              </code>
+            </span>
+          </section>
         </div>
       </main>
     </>
