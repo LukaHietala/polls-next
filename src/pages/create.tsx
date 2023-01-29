@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as yup from "yup";
@@ -8,7 +7,6 @@ import { api } from "../utils/api";
 export default function CreatePoll() {
   const { mutate, isSuccess, isError, error } = api.poll.create.useMutation();
   const router = useRouter();
-  const { data } = useSession();
   const formik = useFormik({
     initialValues: {
       title: "",
