@@ -45,11 +45,14 @@ const Home: NextPage = () => {
           </button>
         </Link>
         <Link href="/vote" className="w-full">
-          <button className="mb-6 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-emerald-400 hover:bg-emerald-100">
+          <button className="mb-8 flex w-full flex-col items-center justify-center rounded-lg border border-neutral-300 bg-white p-6 text-neutral-800 transition-all duration-150 ease-in-out hover:border-emerald-400 hover:bg-emerald-100">
             Vote on a Poll
           </button>
         </Link>
-        <section className="flex w-full flex-col gap-2">
+        <h2 className="mb-3 text-xl font-semibold text-neutral-700">
+          Your polls
+        </h2>
+        <section className="mb-6 flex w-full flex-col gap-2">
           {polls.map((poll) => (
             <Poll key={poll.id} poll={poll} />
           ))}

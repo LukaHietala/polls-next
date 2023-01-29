@@ -65,4 +65,34 @@ export const pollRouter = createTRPCRouter({
 
       return poll;
     }),
+  vote: protectedProcedure
+    .input(
+      z.object({
+        pollId: z.string(),
+        optionId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const vote = await ctx.prisma.vote.create({
+        data: {
+          option: {
+            connect: {
+              id: input.optionId,
+            },
+          },
+          Poll: {
+            connect: {
+              id: input.pollId,
+            },
+          },
+
+          user: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+        },
+      });
+      return vote;
+    }),
 });
