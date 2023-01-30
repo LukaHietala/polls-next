@@ -26,7 +26,7 @@ export default function PollPage() {
 
     const { mutate: deletePoll } = api.poll.delete.useMutation({
         onSuccess: () => {
-            router.push("/");
+            void router.push("/");
         },
     });
     if (isLoading) {
